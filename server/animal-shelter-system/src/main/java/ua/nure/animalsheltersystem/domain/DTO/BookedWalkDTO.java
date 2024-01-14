@@ -1,4 +1,4 @@
-package ua.nure.animalsheltersystem.bookedWalk;
+package ua.nure.animalsheltersystem.domain.DTO;
 
 import java.time.LocalDate;
 

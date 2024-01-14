@@ -1,4 +1,4 @@
-package ua.nure.animalsheltersystem.user;
+package ua.nure.animalsheltersystem.domain.DTO;
 
 import java.time.LocalDate;
 import java.time.Period;
