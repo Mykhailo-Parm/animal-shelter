@@ -12,6 +12,7 @@ import ua.nure.animalsheltersystem.services.BookedWalkService;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,10 +26,16 @@ public class BookedWalkController {
         this.bookedWalkMapper = bookedWalkMapper;
     }
 
-//    @GetMapping(path = "{userId}/{animalId}")
-//    public BookedWalkDTO getBookedWalk(@PathVariable("userId") Long userId, @PathVariable("animalId") Long animalId) throws SQLException {
-//        return bookedWalkService.getBookedWalk(userId, animalId);
-//    }
+    @GetMapping(path = "{userId}/{animalId}")
+    public ResponseEntity<BookedWalkDTO> getBookedWalk(@PathVariable("userId") Long userId, @PathVariable("animalId") Long animalId) {
+        Optional<BookedWalkEntity> foundBookedWalk = bookedWalkService.findById(userId, animalId);
+        return foundBookedWalk
+                .map(bookedWalkEntity -> new ResponseEntity<>(
+                        bookedWalkMapper.mapTo(bookedWalkEntity),
+                        HttpStatus.OK
+                ))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @GetMapping
     public List<BookedWalkDTO> getBookedWalks() {

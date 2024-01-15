@@ -12,6 +12,7 @@ import ua.nure.animalsheltersystem.services.AnimalService;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,10 +26,16 @@ public class AnimalController {
         this.animalMapper = animalMapper;
     }
 
-//    @GetMapping(path = "{animalId}")
-//    public AnimalDTO getAnimal(@PathVariable("animalId") Long id) throws SQLException {
-//        return animalService.getAnimal(id);
-//    }
+    @GetMapping(path = "{id}")
+    public ResponseEntity<AnimalDTO> getAnimal(@PathVariable("id") Long id) {
+        Optional<AnimalEntity> foundAnimal = animalService.findOne(id);
+        return foundAnimal
+                .map(animalEntity -> new ResponseEntity<>(
+                        animalMapper.mapTo(animalEntity),
+                        HttpStatus.OK
+                ))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @GetMapping
     public List<AnimalDTO> getAnimals() {

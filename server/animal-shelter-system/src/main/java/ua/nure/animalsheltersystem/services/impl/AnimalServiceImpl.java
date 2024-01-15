@@ -6,6 +6,7 @@ import ua.nure.animalsheltersystem.repositories.AnimalRepository;
 import ua.nure.animalsheltersystem.services.AnimalService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -31,5 +32,10 @@ public class AnimalServiceImpl implements AnimalService {
                                 .spliterator()
                         , false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<AnimalEntity> findOne(Long id) {
+        return animalRepository.findById(id);
     }
 }

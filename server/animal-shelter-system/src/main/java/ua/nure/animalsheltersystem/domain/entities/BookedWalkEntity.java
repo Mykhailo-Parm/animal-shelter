@@ -20,6 +20,14 @@ public class BookedWalkEntity {
     @EmbeddedId
     private BookedWalkCK id;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id", insertable = false, updatable = false)
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "id_animal", referencedColumnName = "id", insertable = false, updatable = false)
+    private AnimalEntity animal;
+
     @Column(name = "date_of_walk")
     private LocalDate dateOfWalk;
 
